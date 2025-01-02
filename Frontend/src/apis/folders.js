@@ -18,9 +18,14 @@ export const createFolder = async (name,id) => {
             return false;
         }
     } catch (error) {
-        console.error(error);
-        toast.error('Server error');
-        return false;
+        if (error.response) {
+            toast.error(error.response.data.message);
+            return false;
+        }
+        else{
+            toast.error(error.message);
+            return false;
+        }
     }
 }
 export const getAllfolders = async (id) => {
@@ -58,8 +63,13 @@ export const deleteFolderApi = async (folderId) => {
             return false;
         }
     } catch (error) {
-        console.error(error);
-        toast.error('Server error: '+ error.message);
-        return false;
+        if (error.response) {
+            toast.error(error.response.data.message);
+            return false;
+        }
+        else{
+            toast.error(error.message);
+            return false;
+        }
     }
 };

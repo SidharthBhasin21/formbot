@@ -121,3 +121,59 @@ module.exports.logoutUser = async (req, res) => {
         return res.redirect('/');
     }
 }
+
+module.exports.updateUser = async (req, res) => {
+    try {
+        
+        const userId = req.user._id;
+        const { username, email, oldPassword, newPassword } = req.body;
+        const userdata = await userModel.findOne({ _id: userId });
+        
+        if (userdata) {
+            const updatedata = {};
+            if (username) updatedata.username = username;
+            if (email.length > 0) {
+                if (await userModel.findOne({ email: email })) {
+                    return res.status(409).json({ 
+                        status: "error", 
+                        message: "Email already exists."
+                    });
+                }
+                updatedata.email = email
+            }
+
+            if (newPassword.length> 0) {
+                if (!await bcrypt.compare(oldPassword, userdata.password)) {
+                    return res.status(409).json({
+                        status: "error",
+                        message: "Your old password seems to be incorrect."
+                    })
+                }
+                if (await bcrypt.compare(oldPassword, userdata.password) == await bcrypt.compare(newPassword, userdata.password)) {
+                    return res.status(409).json({
+                        status: "error",
+                        message: "New password can not be same as old password."
+                    })
+                }
+                updatedata.password = await bcrypt.hash(newPassword, 10);
+            }
+            console.log("update",updatedata)
+            if (Object.keys(updatedata).length === 0) {
+                res.status(200).json({ 
+                    status: "success", 
+                    message: "You have not set anything to updated." });
+            }
+
+            await userModel.findByIdAndUpdate(userId, updatedata);
+            res.status(200).json({ status: "success", message: "Profile updated successfully." });
+        } else {
+            return res.status(404).json({ status: "error", message: "User not found." });
+        }
+    } catch (err) {
+        if (err.code === 409) {
+            res.status(409).json({ status: "error", message: err.message });
+        } else {
+            res.status(500).json({ status: "error", message: "Internal server error." });
+        }   
+    }
+}

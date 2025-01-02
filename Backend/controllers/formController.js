@@ -18,7 +18,29 @@ module.exports.createForm = async (req, res) => {
                 message: "Form name is required",
             });
         }
+        const dashboard = await dashboardModel.findById(dashboardId);
 
+        if (!dashboard) {
+            return res.status(404).json({
+                status: "error",
+                message: "Dashboard not found",
+            });
+        }
+
+        // Check if the user is the owner or has edit permissions
+        const isOwner = dashboard.owner.toString() === req.user._id.toString();
+        const isEditor = dashboard.members.some(
+            (member) =>
+                member.user.toString() === req.user._id.toString() &&
+                member.permissions === "edit"
+        );
+
+        if (!isOwner && !isEditor) {
+            return res.status(403).json({
+                status: "error",
+                message: "You do not have permission to create forms in this dashboard",
+            });
+        }
         // Find the folder by ID
         const folder = await dashboardModel.findById(dashboardId);
 
@@ -65,7 +87,6 @@ module.exports.createFormInFolder = async(req,res)=>{
 
         console.log(folderId)
 
-        // Validate input
         if (!name) {
             return res.status(400).json({
                 status: "error",
@@ -73,7 +94,6 @@ module.exports.createFormInFolder = async(req,res)=>{
             });
         }
 
-        // Find the folder by ID
         const folder = await Folder.findById(folderId);
 
         if (!folder) {
@@ -82,6 +102,31 @@ module.exports.createFormInFolder = async(req,res)=>{
                 message: "Folder not found",
             });
         }
+
+        const dashboard = await dashboardModel.findOne({ folders: folderId });
+
+        if (!dashboard) {
+            return res.status(404).json({
+                status: "error",
+                message: "Dashboard not found for this folder",
+            });
+        }
+
+        // Check if the user has edit permissions
+        const isOwner = dashboard.owner.toString() === req.user._id.toString();
+        const isEditor = dashboard.members.some(
+            (member) =>
+                member.user.toString() === req.user._id.toString() &&
+                member.permissions === "edit"
+        );
+
+        if (!isOwner && !isEditor) {
+            return res.status(403).json({
+                status: "error",
+                message: "You do not have permission to create forms in this folder",
+            });
+        }
+
 
         // Create a new form
         const newForm = new Form({
@@ -140,7 +185,7 @@ module.exports.getForm = async (req, res) => {
 module.exports.deleteForm = async (req, res) => {
     try {
         const form = await Form.findById(req.params.id);
-
+        console.log(form)
         if (!form) {
             return res.status(404).json({ 
                 status: "error",
@@ -154,11 +199,20 @@ module.exports.deleteForm = async (req, res) => {
                 message: "You do not have permission to delete this form" });
         }
 
-        // Remove the form from its folder if applicable
         if (form.folder) {
+            // If the form is inside a folder, remove it from the folder
             const folder = await Folder.findById(form.folder);
-            folder.forms.pull(form._id);
-            await folder.save();
+            if (folder) {
+                folder.forms.pull(form._id);
+                await folder.save();
+            }
+        } else {
+            // If the form is directly in the dashboard (not inside a folder)
+            const dashboard = await dashboardModel.findOne({ forms: form._id });
+            if (dashboard) {
+                dashboard.forms.pull(form._id);
+                await dashboard.save();
+            }
         }
 
         await Form.findByIdAndDelete(form._id);
@@ -321,17 +375,4 @@ module.exports.saveFormResponse = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-};
-
-const validateFormData = async (formId) => {
-    if (!ObjectId.isValid(formId)) {
-        throw Object.assign(Error("This form is not valid, please check your URL"), { code: 400 });
-    }
-
-    const formdata = await Form.findById(formId);
-    if (!formdata) {
-        throw Object.assign(Error("This form is not valid, please check your URL."), { code: 404 });
-    }
-
-    return formdata;
 };

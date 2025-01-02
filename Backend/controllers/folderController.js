@@ -22,7 +22,7 @@ module.exports.createFolder = async (req, res) => {
                 message: "Dashboard not found" 
             });
         }
-
+        console.log(dashboard);
         const isOwner = dashboard.owner.toString() === req.user._id.toString();
         const isEditor = dashboard.members.some(
             (member) =>
@@ -98,12 +98,36 @@ module.exports.getFolder = async (req, res) => {
 }
 module.exports.deleteFolder = async (req, res) => {
     try {
+        const folderId = req.params.id;
         const folder = await Folder.findById(req.params.id);
         
         if (!folder) {
             return res.status(404).json({ 
                 status: "error",
                 message: "Folder not found" 
+            });
+        }
+        const dashboard = await Dashboard.findOne({ folders: folderId });
+
+        if (!dashboard) {
+            return res.status(404).json({
+                status: "error",
+                message: "Dashboard not found for this folder",
+            });
+        }
+
+        // Check if the user has edit permissions
+        const isOwner = dashboard.owner.toString() === req.user._id.toString();
+        const isEditor = dashboard.members.some(
+            (member) =>
+                member.user.toString() === req.user._id.toString() &&
+                member.permissions === "edit"
+        );
+
+        if (!isOwner && !isEditor) {
+            return res.status(403).json({
+                status: "error",
+                message: "You do not have permission to delete this folder",
             });
         }
 

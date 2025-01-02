@@ -16,12 +16,11 @@ const {
 
 
 router.post('/folder/:folderId', isLoggedIn , createFormInFolder)
-router.patch('/update/:formId', isLoggedIn , updateForm);
-router.post('/:dashboardId', isLoggedIn , createForm)
 router.post('/hits/:formId', countFormHit);
 router.post('/response/:formId', saveFormResponse);
+router.post('/:dashboardId', isLoggedIn , createForm)
 
-
+router.patch('/update/:formId', isLoggedIn , updateForm);
 
 router.get('/:dashboardId', isLoggedIn, getAllForms)
 router.get('/update/:id', isLoggedIn , getForm);

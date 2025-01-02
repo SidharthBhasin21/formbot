@@ -8,6 +8,7 @@ import Folder from './pages/folder/Folder'
 import EditForm from './pages/editForm/EditForm'
 import Submission from './pages/submission/Submission'
 import FormShare from './pages/formshare/FormShare'
+import Settings from './pages/settings/settings'
 
 const App = () => {
 
@@ -23,6 +24,7 @@ const App = () => {
       <Route path="/dashboard/:id" element={<Dashboard />} />
       <Route path="/submissions" element={<Submission />} />
       <Route path="/share/:wid" element={<FormShare />} />
+      <Route path="/settings" element={<Settings />} />
     </Routes>
   )
 }

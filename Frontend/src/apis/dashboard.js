@@ -67,9 +67,12 @@ export const createFormInDashboard = async (id,name) => {
         
 
     } catch (error) {
-        console.error(error);
-        toast.error('Server error');
-        return null;
+        if(error.response.data.message){
+            toast.error(error.response.data.message);
+        }
+        else{
+            toast.error('Server error');
+        }
     }
 }
 

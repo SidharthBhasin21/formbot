@@ -14,9 +14,14 @@ export const deleteForm = async (id) => {
         toast.success(message);
         return true;
     } catch (error) {
-        console.error(error);
-        toast.error('Server error: '+ error.message);
-        return null;
+        if (error.response) {
+            toast.error(error.response.data.message);
+            return null;
+        }
+        else{
+            toast.error(error.message);
+            return null;
+        }
     }
 }
 
@@ -37,9 +42,14 @@ export const createFormInFolder = async (id,name)=>{
         
 
     } catch (error) {
-        console.error(error);
-        toast.error('Server error');
+        if (error.response) {
+        toast.error(error.response.data.message);
         return null;
+    }
+    else{
+        toast.error(error.message);
+        return null;
+    }
     }
 }
 

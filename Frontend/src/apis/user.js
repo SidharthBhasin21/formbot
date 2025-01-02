@@ -48,4 +48,27 @@ export const userSignupApi = async (userData) => {
         toast.error(error.message);
     }
 }
+export const userUpdate = async (userData) => {
+    try {
+        const response = await axios.post(`${baseUrl}/auth/update`, userData, {
+            withCredentials: true,
+        });
 
+        const { status, message } = response.data;
+        if (status === 'success') {
+            toast.success(message);
+            return true;
+        } else {
+            toast.error(message);
+            return false;
+        }
+    } catch (error) {
+        console.log(error);
+        if (error?.response?.data?.message) {
+            toast.error(error.response.data.message);
+        } else {
+            toast.error('Server error');
+        }
+
+    }
+}
