@@ -1,0 +1,71 @@
+.auth {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: #FFFFFFEB;
+    width: 500px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+    font-weight: 400;
+}
+
+.vector {
+    position: absolute;
+}
+
+.triangleLayer {
+    top: 50%;
+    left: 1%;
+    transform: translateY(-50%);
+}
+
+.ellipsePink {
+    top: 20%;
+    right: 0;
+}
+
+.ellipseYellow {
+    bottom: 0;
+    right: 23%;
+}
+.google {
+    font-weight: 700;
+    outline: 0;
+    border: 0;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #1A5FFF;
+    text-decoration: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+}
+.google img {
+    vertical-align: middle;
+    width: 2px;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 2px;
+    flex-grow: 1;
+}
+.google span {
+    flex-grow: 15;
+    vertical-align: middle;
+}
