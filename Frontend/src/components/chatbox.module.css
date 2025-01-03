@@ -46,7 +46,7 @@
 }
 
 .chatbox .user button {
-    background: var(--accent-color);
+    background: #1A5FFF;
     color: #fff;
     font-weight: normal;
 }
@@ -58,12 +58,13 @@
     right: -5px;
     width: 10px;
     height: 10px;
-    background-color: var(--accent-color);
+    background-color: #1A5FFF;
     border-radius: 50%;
 }
 
 @media only screen and (max-width: 600px) {
     .chatbox {
         width: 100% !important;
+        
     }
 }

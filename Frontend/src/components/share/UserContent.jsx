@@ -18,7 +18,11 @@ function UserContent({ item, index, getInputValue, setIsSubmit, disableFlagArr, 
             <div className={styles.inputs}>
                 <div className={`${styles.rating} ${disableFlagArr[index] ? styles.disabled : ''}`}>
                     {[1, 2, 3, 4, 5].map((i, idx) => (
-                        <button key={i} className={activeRating === idx ? styles.activeRating : ''} onClick={() => { getInputValue(item.key, i); setActiveRating(idx); }}>{i}</button>
+                        <button 
+                            key={i} 
+                            className={activeRating === idx ? styles.activeRating : ''} 
+                            onClick={() => { getInputValue(item.key, i); setActiveRating(idx); }}
+                        >{i}</button>
                     ))}
                 </div>
                 <button className={styles.submitBtn} onClick={() => setIsSubmit(item.key)} disabled={disableFlagArr[index]}>

@@ -4,6 +4,7 @@
     min-height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
+    padding: 10px 15px;
 }
 
 .chatbox {
@@ -55,8 +56,11 @@
     height: 35px;
     width: 35px;
     border-radius: 50%;
+    background-color: #1A5FFF;
 }
-
+.activeRating {
+    
+}
 .rating .activeRating,
 .inputBtn:disabled {
     pointer-events: none;
@@ -69,4 +73,5 @@
     .inputs .rating {
         width: 235px !important;
     }
+
 }
