@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "../dashboard/Dashboard.module.css";
 import FormCard from "../../components/dashboard/FormCard";
 import DeleteModal from "../../components/dashboard/DeleteModal";
-import CreateFormModal from "../../components/createFormModal";
+import CreateFormModal from "../../components/CreateFormModal";
 import { createFormInDashboard, getAllforms } from "../../apis/dashboard";
 import { createFormInFolder, deleteForm, getAllformsInFolder } from "../../apis/form";
 
