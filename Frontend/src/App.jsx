@@ -8,7 +8,7 @@ import Folder from './pages/folder/Folder'
 import EditForm from './pages/editForm/EditForm'
 import Submission from './pages/submission/Submission'
 import FormShare from './pages/formshare/FormShare'
-import Settings from './pages/settings/settings'
+import Settings from './pages/settings/Settings'
 
 const App = () => {
   
