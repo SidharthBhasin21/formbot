@@ -27,16 +27,17 @@ function Navbar({ setWorkspaceId, updateFormSequence }) {
     const [formSequence, setFormSequence] = useState('');
     const [formNameError, setFormNameError] = useState('');
 
-    const createForm = async () => {
-        setFormNameError('');
-        if (formName.trim().length === 0) { setFormNameError('Enter form name'); return; }
+    // const createForm = async () => {
+    //     setFormNameError('');
+    //     if (formName.trim().length === 0) { setFormNameError('Enter form name'); return; }
 
-        const formId = await createFormApi(folderId, formName, token);
-        if (formId) {
-            setFormId(formId); setWorkspaceId(formId);
-            navigate(`/workspace?wid=${formId}`);
-        }
-    };
+    //     const formId = await createFormApi(folderId, formName, token);
+    //     if (formId) {
+    //         setFormId(formId); setWorkspaceId(formId);
+    //         navigate(`/workspace?wid=${formId}`);
+    //     }
+    // };
+    
     const handleThemeToggle = () => {
         dispatch(toggleDarkMode())
         setIsDarkMode(!isDarkMode)  
@@ -88,15 +89,15 @@ function Navbar({ setWorkspaceId, updateFormSequence }) {
         // Apply the theme on mount
         document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
         localStorage.setItem('darkMode', isDarkMode);
-    }, [isDarkMode]); 
-
+    }, [isDarkMode]);
+    
     return (
         <div className={styles.navbar}>
             <div className={styles.formTitle}>
                 <input type="text" className={formNameError && 'error'} value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="Enter Form Name" />
             </div>
             <div className={styles.formNav}>
-                <NavLink to={formId ? `/workspace?wid=${formId}` : window.location} className={({ isActive }) => isActive ? styles.active : ''}>Flow</NavLink>
+                <NavLink to={formId ? `/form/edit/${folderId}` : window.location} className={({ isActive }) => isActive ? styles.active : ''}>Flow</NavLink>
                 <NavLink to={formId ? `/submissions?fid=${formId}` : window.location} className={({ isActive }) => isActive && formId ? styles.active : ''}>Response</NavLink>
             </div>
             <div className={styles.formAction}>

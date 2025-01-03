@@ -95,5 +95,6 @@ span {
 
 .Toastify {
   width: fit-content !important;
-  display: none !important;
+  position: absolute;
+  top: 0;
 }

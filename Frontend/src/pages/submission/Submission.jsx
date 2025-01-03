@@ -12,10 +12,11 @@ const Submission = () => {
   const token = useAuth();
   const [searchParams] = useSearchParams();
   const dashboardId = useSelector(state => state.dashboard.dashboardId);
-
   const [formId, setFormId] = useState(searchParams.get('fid'));
   const [formStarts, setFormStarts] = useState(0);
   const [formCompletion, setFormCompletion] = useState(0);
+  
+  console.log(searchParams.get('fid'))
 
   const [noResponse, setNoResponse] = useState(false);
   const [formData, setFormData] = useState({ views: 0, sequence: [], formResponse: [] });

@@ -28,6 +28,10 @@
     gap: 10px;
     font-weight: 400;
 }
+.inputs input {
+    color: #fff;
+
+}
 
 .vector {
     position: absolute;
