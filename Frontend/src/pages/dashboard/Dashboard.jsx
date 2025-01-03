@@ -245,7 +245,7 @@ const Dashboard = () => {
               checked={isDarkMode}
               onChange={handleThemeToggle}
             />
-            <label class={styles.toggleLabel} for="toggle"></label>
+            <label className={styles.toggleLabel} htmlFor="toggle"></label>
           </div>
 
           <button

@@ -93,6 +93,7 @@ span {
   left: 50px;
 }
 
-.Toastify__toast-container {
+.Toastify {
   width: fit-content !important;
+  display: none !important;
 }

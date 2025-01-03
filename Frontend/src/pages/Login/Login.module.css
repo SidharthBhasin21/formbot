@@ -6,6 +6,11 @@
     flex-direction: column;
     gap: 20px;
     position: relative;
+    background-color: #171923;
+    color: #fff;
+}
+.auth span {
+    color: #fff;
 }
 
 .form {

@@ -1,116 +1,126 @@
-import React, { useEffect, useState } from 'react'
-import { fetchFormById, saveFormResponse, shareForm, vewsInc } from '../../apis/form';
-import { useParams } from 'react-router-dom';
-import moment from 'moment';
-import styles from './FormShare.module.css'
-import cstyles from '../../components/chatbox.module.css'
-import AdminContent from '../../components/share/AdminContent';
-import UserContent from '../../components/share/UserContent';
-
+import React, { useEffect, useState } from "react";
+import {
+    fetchFormById,
+    saveFormResponse,
+    shareForm,
+    vewsInc,
+} from "../../apis/form";
+import { useParams } from "react-router-dom";
+import moment from "moment";
+import styles from "./FormShare.module.css";
+import cstyles from "../../components/chatbox.module.css";
+import AdminContent from "../../components/share/AdminContent";
+import UserContent from "../../components/share/UserContent";
 
 const FormShare = () => {
-  const { wid } = useParams();
-  const vid = Math.floor(10000 + Math.random() * 90000);
-  const startDate = moment().format('MMM DD, hh:mm A');
+    const { wid } = useParams();
+    const vid = Math.floor(10000 + Math.random() * 90000);
+    const startDate = moment().format("MMM DD, hh:mm A");
 
-  const [formData, setFormData] = useState({});
-  const [formSequence, setFormSequence] = useState({});
-  const [formResponse, setFormResponse] = useState({ vid, startDate });
+    const [formData, setFormData] = useState({});
+    const [formSequence, setFormSequence] = useState({});
+    const [formResponse, setFormResponse] = useState({ vid, startDate });
 
-  const [activeRating, setActiveRating] = useState('');
-  const [hitFlag, setHitFlag] = useState(true);
-  const [shareBox, setShareBox] = useState([]);
-  const [shareBoxIndex, setShareBoxIndex] = useState(0);
-  const [disableFlagArr, setDisableFlagArr] = useState([]);
+    const [activeRating, setActiveRating] = useState("");
+    const [hitFlag, setHitFlag] = useState(true);
+    const [shareBox, setShareBox] = useState([]);
+    const [shareBoxIndex, setShareBoxIndex] = useState(0);
+    const [disableFlagArr, setDisableFlagArr] = useState([]);
 
-  const fetchFormById = async () => {
-      const data = await shareForm(wid);
-      if (data) {
-          setFormData(data); 
-          setFormSequence(data.sequence);
-      }
-      console.log(formData)
-      console.log(formSequence)
-  };
+    const fetchFormById = async () => {
+        const data = await shareForm(wid);
+        if (data) {
+            setFormData(data);
+            setFormSequence(data.sequence);
+        }
+        console.log(formData);
+        console.log(formSequence);
+    };
 
-  const getInputValue = (key, value) => {
-      setFormResponse((prevData) => ({
-          ...prevData, [key]: value
-      }));
-  };
+    const getInputValue = (key, value) => {
+        setFormResponse((prevData) => ({
+            ...prevData,
+            [key]: value,
+        }));
+    };
 
-  const setIsSubmit = async (key, e) => {
-      e && e.preventDefault();
-      if (!key.includes("Button") && !(key in formResponse)) return;
-      await saveFormResponse(wid, formResponse);
-      console.log(formResponse)
+    const setIsSubmit = async (key, e) => {
+        e && e.preventDefault();
+        if (!key.includes("Button") && !(key in formResponse)) return;
+        await saveFormResponse(wid, formResponse);
+        console.log(formResponse);
 
-      setDisableFlagArr(prevArray => {
-          const newArray = [...prevArray];
-          newArray[shareBoxIndex] = true;
-          return newArray;
-      });
+        setDisableFlagArr((prevArray) => {
+            const newArray = [...prevArray];
+            newArray[shareBoxIndex] = true;
+            return newArray;
+        });
 
-      const n = formSequence.length;
-      let idx = shareBoxIndex;
-      const newItems = [];
+        const n = formSequence.length;
+        let idx = shareBoxIndex;
+        const newItems = [];
 
-      while (idx + 1 < n) {
-          idx += 1;
-          newItems.push(formSequence[idx]);
-          if (formSequence[idx].data.role === 'user') {
-              break;
-          }
-      }
+        while (idx + 1 < n) {
+            idx += 1;
+            newItems.push(formSequence[idx]);
+            if (formSequence[idx].data.role === "user") {
+                break;
+            }
+        }
 
-      setShareBox((prev) => [...prev, ...newItems]);
-      setShareBoxIndex(idx);
-  };
+        setShareBox((prev) => [...prev, ...newItems]);
+        setShareBoxIndex(idx);
+    };
 
-  useEffect(() => {
-      const adminItems = [];
-      const n = formSequence.length;
-      let idx = -1;
+    useEffect(() => {
+        const adminItems = [];
+        const n = formSequence.length;
+        let idx = -1;
 
-      for (let i = 0; i < n; i++) {
-          if (formSequence[i].data.role === 'admin') {
-              adminItems.push(formSequence[i]);
-          }
-          else {
-              adminItems.push(formSequence[i]);
-              idx = i;
-              break;
-          }
-      }
+        for (let i = 0; i < n; i++) {
+            if (formSequence[i].data.role === "admin") {
+                adminItems.push(formSequence[i]);
+            } else {
+                adminItems.push(formSequence[i]);
+                idx = i;
+                break;
+            }
+        }
 
-      const boolArr = new Array(n).fill(false);
-      setDisableFlagArr(boolArr);
-      setShareBox(adminItems);
-      setShareBoxIndex(idx);
-  }, [formSequence]);
+        const boolArr = new Array(n).fill(false);
+        setDisableFlagArr(boolArr);
+        setShareBox(adminItems);
+        setShareBoxIndex(idx);
+    }, [formSequence]);
 
-  useEffect(() => {
-      if (wid) fetchFormById();
-      const fromHit = async () => {
-          if (hitFlag) {
-              await vewsInc(wid);
-              setHitFlag(false)
-          }
-      }
+    useEffect(() => {
+        if (wid) fetchFormById();
+        const fromHit = async () => {
+            if (hitFlag) {
+                await vewsInc(wid);
+                setHitFlag(false);
+            }
+        };
 
-      fromHit();
-  }, []);
-  return (
-    <section className={styles.shareLayout} >
+        fromHit();
+    }, []);
+    return (
+        <section className={styles.shareLayout}>
             {shareBox.length > 0 && (
                 <div className={`${styles.chatbox} ${cstyles.chatbox}`}>
                     {shareBox.map((item, index) => (
                         <div key={item.key + index} className={cstyles[item.data.role]}>
-                            {item.data.role === 'admin' ? (
+                            {item.data.role === "admin" ? (
                                 <>
-                                    <img className={cstyles.chatHead} src="/logo.png" alt="admin" />
+                                    <img
+                                        className={cstyles.chatHead}
+                                        src="/logo.png"
+                                        alt="admin"
+                                    />
                                     <div className={cstyles.chat}>
-                                        <span><AdminContent item={item} /></span>
+                                        <span>
+                                            <AdminContent item={item} />
+                                        </span>
                                     </div>
                                 </>
                             ) : (
@@ -131,7 +141,7 @@ const FormShare = () => {
                 </div>
             )}
         </section>
-  )
-}
+    );
+};
 
-export default FormShare
+export default FormShare;

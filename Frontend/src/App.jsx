@@ -11,8 +11,6 @@ import FormShare from './pages/formshare/FormShare'
 import Settings from './pages/settings/settings'
 
 const App = () => {
-
-  
   
   return (
     <Routes>

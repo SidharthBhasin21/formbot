@@ -7,6 +7,7 @@
     padding: 20px 150px;
     font-size: 18px;
     font-weight: bold;
+    background-color: #171923;
 }
 
 .navbar .logo {
@@ -14,7 +15,6 @@
     align-items: center;
     color: #fff;
     gap: 10px;
-    font-family: var(--font-alt);
 }
 
 .navbar .action {
@@ -34,6 +34,9 @@
     flex-direction: column;
     align-items: center;
     gap: 40px;
+    background-color: #171923;
+    color: #fff;
+
 }
 
 .hero button {
@@ -83,6 +86,8 @@
     justify-content: space-around;
     gap: 30px;
     color: #FFFFFFEB;
+    background-color: #171923;
+
 }
 
 .footer a,

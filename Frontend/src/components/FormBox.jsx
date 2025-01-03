@@ -7,7 +7,7 @@ function FormBox({ button, index, handleRemoveBox, getFormBoxValue, formBoxError
     return (
         <div key={index} className={styles.card}>
             <div className={styles.remove} onClick={() => handleRemoveBox(index)} >
-                <img src="/icons/bin.png" alt="trash icon" />
+                <img src="/icons/bin.png" alt="trash" />
             </div>
             <span className={styles.title}>{`${role === "user" ? 'Input ' : ''}${type} ${button.key.split(":")[1]}`}</span>
             <div className={styles.inputBox}>
