@@ -1,5 +1,5 @@
 .space {
-    background: #1F1F23;
+    background-color: var(--primary);
     overflow-y: auto;
 }
 
@@ -7,7 +7,7 @@
     position: fixed;
     margin: 80px 0 20px 20px;
     padding: 20px;
-    background: #18181B;
+    background: var(--secondary);
     width: 350px;
     height: calc(100vh - 150px);
     border: 1px solid #c4c4c4;
@@ -24,8 +24,8 @@
 
 .sidebar button {
     font-weight: normal;
-    background: #27272A;
-    color: #FFFFFFEB;
+    background: var(--primary);
+    color: var(--text-color);
     display: flex;
     align-items: center;
     gap: 15px;
@@ -54,7 +54,7 @@
     width: 350px;
     padding: 20px;
     border-radius: 10px;
-    background: #18181B;
+    background: var(--secondary);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -104,7 +104,10 @@
 
 .inputBox input {
     padding: 10px 40px !important;
-    background: #1F1F23 !important;
+    background: var(--primary) !important;
     border: none !important;
     border-radius: 5px !important;
 }
+
+
+

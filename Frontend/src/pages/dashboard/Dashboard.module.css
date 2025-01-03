@@ -3,11 +3,16 @@
     display: flex;
     justify-content: center;
     padding: 10px;
+    background-color: var(--primary);
+    color: var(--text-color);
+
 }
 
 .dropdown {
     position: absolute;
     font-weight: normal;
+    background-color: var(--primary);
+    color: var(--text-color);
 }
 
 .dropdownBtn {
@@ -17,6 +22,7 @@
     align-items: center;
     gap: 10px;
     font-weight: normal;
+    color: var(--text-color);
 }
 
 .arrowDown {
@@ -26,7 +32,7 @@
 }
 
 .dropdownContent {
-    background-color: #171923;
+    background-color: var(--primary);
     display: none;
     position: absolute;
     width: 100%;
@@ -34,24 +40,29 @@
 }
 
 .dropdownContent p {
-    color: #fff;
+    color: var(--text-color);
     padding: 10px 16px;
     border: 1px solid #C4C4C4;
     border-top: none;
     text-decoration: none;
     display: block;
 }
+
 .dropdownContent a {
-    color: #fff;
+    color: var(--text-color);
     padding: 10px 16px;
     border: 1px solid #C4C4C4;
     border-top: none;
     text-decoration: none;
     display: block;
 }
+
 .share {
     margin-left: auto;
     margin-right: 50px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
 }
 
 .dropdownContent .logout {
@@ -80,7 +91,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #FFFFFF14;
+    background-color: #8b8b8d;
     color: #FFFFFFEB;
     font-weight: 600;
 }
@@ -124,12 +135,12 @@
 }
 
 .forms .created {
-    background: #FFFFFF80;
+    background-color: #8b8b8d;
 }
 
 .createFolderModal,
 .deleteFolderModal {
-    background: #171923;
+    background: var(--primary);
     position: absolute;
     top: 0;
     left: 240px;
@@ -156,7 +167,7 @@
 
 .createFolderModal input {
     border: none !important;
-    background: #1F1F23 !important;
+    background: var(--primary) !important;
 }
 
 .action {
@@ -174,4 +185,81 @@
 .action span:nth-child(2) {
     border-left: 1px solid #C4C4C4;
     height: 25px;
+}
+
+/* From Uiverse.io by ClawHack1 */
+/* Genel stil */
+.toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+    margin: 10px;
+}
+
+/* Giriş stil */
+.toggleSwitch .toggleInput {
+    display: none;
+}
+
+/* Anahtarın stilinin etrafındaki etiketin stil */
+.toggleSwitch .toggleLabel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 24px;
+    background-color: #2196F3;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Anahtarın yuvarlak kısmının stil */
+.toggleSwitch .toggleLabel::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    background-color: #fff;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+/* Anahtarın etkin hale gelmesindeki stil değişiklikleri */
+.toggleSwitch .toggleInput:checked+.toggleLabel {
+    background-color: #B1B1B1;
+}
+
+.toggleSwitch .toggleInput:checked+.toggleLabel::before {
+    transform: translateX(16px);
+}
+
+/* Light tema */
+.toggleSwitch.light .toggleLabel {
+    background-color: #BEBEBE;
+}
+
+.toggleSwitch.light .toggleInput:checked+.toggleLabel {
+    background-color: #9B9B9B;
+}
+
+.toggleSwitch.light .toggleInput:checked+.toggleLabel::before {
+    transform: translateX(6px);
+}
+
+/* Dark tema */
+.toggleSwitch.dark .toggleLabel {
+    background-color: #4B4B4B;
+}
+
+.toggleSwitch.dark .toggleInput:checked+.toggleLabel {
+    background-color: #717171;
+}
+
+.toggleSwitch.dark .toggleInput:checked+.toggleLabel::before {
+    transform: translateX(16px);
 }

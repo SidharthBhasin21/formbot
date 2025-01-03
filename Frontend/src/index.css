@@ -1,14 +1,22 @@
-
-
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+:root {
+  --primary: #ffffff;
+  --secondary: #e8e8e8;
+  --text-color: #000000;
+}
 
+[data-theme="dark"] {
+  --primary: #171923;
+  --secondary: #18181B;
+  --text-color: #ffffff;
+}
 html, body{
   font-family: 'Roboto', sans-serif;
-  background-color: #171923;
+  background-color: var(--primary);
 }
 button {
   font-weight: 700;
@@ -22,11 +30,13 @@ button {
   padding: 10px 15px;
   cursor: pointer;
 }
-
+a:-webkit-any-link {
+  text-decoration-color: var(--text-color);
+}
 
 section {
   padding: 100px 150px;
-  color: #fff;
+  color: var(--text-color);
   text-align: center;
 }
 
@@ -38,7 +48,7 @@ section h1 {
 
 section h3,
 div h3 {
-  color: #FFFFFFEB;
+  color: var(--text-color);
 }
 
 section p,
@@ -64,7 +74,7 @@ textarea {
   border-radius: 10px;
   padding: 10px 20px;
   background: transparent;
-  color: #FFFFFFEB;
+  color: var(--text-color);
   font-size: 16px;
 }
 
@@ -73,7 +83,7 @@ textarea.error {
   border: 1px solid #F55050 !important;
 }
 span {
-  color: #FFFFFFEB;
+  color: var(--text-color);
   text-align: center;
 }
 

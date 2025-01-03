@@ -104,8 +104,16 @@ const Submission = () => {
                   lineWidth={25}  
                   tool
                   data={[
-                    { title: "Views", value: views, color: '#909090' },
-                    { title: 'Completes', value: formCompletion, color: '#3B82F6' },
+                    { 
+                      title: "Views", 
+                      value: 100-parseInt(formCompletion / views * 100), 
+                      color: '#909090' 
+                    },
+                    { 
+                      title: 'Completes', 
+                      value: parseInt(formCompletion / views * 100), 
+                      color: '#3B82F6' 
+                    },
                   ]}
                 />
             </section>

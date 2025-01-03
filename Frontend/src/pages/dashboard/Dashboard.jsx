@@ -12,8 +12,9 @@ import CreateFormModal from "../../components/createFormModal";
 import { toast } from "react-toastify";
 import { deleteForm } from "../../apis/form";
 import ShareModal from "../../components/shareModal/ShareModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearDashboardId, setDashboardId } from "../../utils/redux/slices/dashboardSlice";
+import { toggleDarkMode } from "../../utils/redux/slices/themeSlice";
 
 
 const Dashboard = () => {
@@ -22,8 +23,14 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch()
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
 
   const [userData, setUserData] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('darkMode') === 'true';
+  }
+
+  );
 
   const [allFolder, setAllFolder] = useState([]);
   const [allUserDashboards, setAllUserDashboards] = useState([]);
@@ -83,6 +90,11 @@ const Dashboard = () => {
     setDeleteModalOpen(false);
     setIsShareModalOpen(true);
   }
+
+  const handleThemeToggle = () => {
+    dispatch(toggleDarkMode())
+    setIsDarkMode(!isDarkMode)  
+  };
 
   const userDashboard = async () => {
     const data = await getDashboard(id);
@@ -169,6 +181,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    // Apply the theme on mount
+    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    localStorage.setItem('darkMode', isDarkMode);
+  }, [isDarkMode]);
+  
+  useEffect(() => {
     if (token) {
       userDashboard();
     }
@@ -214,10 +232,29 @@ const Dashboard = () => {
             </p>
           </div>
         </div>
-        <button
-          className={styles.share}
-          onClick={openShareModal}
-        >Share</button>
+
+
+        <div
+            className={styles.share}
+        >
+          <div className={styles.toggleSwitch}>
+            <input 
+              className={styles.toggleInput} 
+              id="toggle" 
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={handleThemeToggle}
+            />
+            <label class={styles.toggleLabel} for="toggle"></label>
+          </div>
+
+          <button
+            onClick={openShareModal}
+          >Share</button>
+        </div>
+
+
+        
       </div>
       <div className={styles.section}>
         <div className={styles.folders}>

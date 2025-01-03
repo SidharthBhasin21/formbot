@@ -6,7 +6,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #18181B;
+    background: var(--primary);
     padding: 10px 20px;
     box-sizing: border-box;
     z-index: 1;
@@ -16,7 +16,7 @@
     padding: 5px 10px !important;
     border: none !important;
     border-radius: 5px !important;
-    background: #37373E !important;
+    background: var(--secondary) !important;
 }
 
 .formNav,
@@ -26,9 +26,10 @@
     gap: 10px;
 }
 
+
 .formNav a,
 .formAction a {
-    color: #fff;
+    color: var(--text-color);
     display: flex;
     border: 1px solid transparent;
     border-radius: 5px;
@@ -56,4 +57,76 @@
 
 .formAction button:nth-child(2) {
     background: #4ADE80CC;
+}
+.toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+}
+.toggleSwitch .toggleInput {
+    display: none;
+    
+}
+
+/* Anahtarın stilinin etrafındaki etiketin stil */
+.toggleSwitch .toggleLabel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 24px;
+    background-color: #2196F3;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Anahtarın yuvarlak kısmının stil */
+.toggleSwitch .toggleLabel::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    background-color: #fff;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+/* Anahtarın etkin hale gelmesindeki stil değişiklikleri */
+.toggleSwitch .toggleInput:checked+.toggleLabel {
+    background-color: #B1B1B1;
+}
+
+.toggleSwitch .toggleInput:checked+.toggleLabel::before {
+    transform: translateX(16px);
+}
+
+/* Light tema */
+.toggleSwitch.light .toggleLabel {
+    background-color: #BEBEBE;
+}
+
+.toggleSwitch.light .toggleInput:checked+.toggleLabel {
+    background-color: #9B9B9B;
+}
+
+.toggleSwitch.light .toggleInput:checked+.toggleLabel::before {
+    transform: translateX(6px);
+}
+
+/* Dark tema */
+.toggleSwitch.dark .toggleLabel {
+    background-color: #4B4B4B;
+}
+
+.toggleSwitch.dark .toggleInput:checked+.toggleLabel {
+    background-color: #717171;
+}
+
+.toggleSwitch.dark .toggleInput:checked+.toggleLabel::before {
+    transform: translateX(16px);
 }

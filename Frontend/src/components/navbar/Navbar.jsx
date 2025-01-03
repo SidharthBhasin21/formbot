@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import { createFormApi, fetchFormById, updateForm } from "../../apis/form";
 import styles from './Navbar.module.css';
 import useAuth from '../../hooks/useAuth';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleDarkMode } from '../../utils/redux/slices/themeSlice';
 
 function Navbar({ setWorkspaceId, updateFormSequence }) {
     const token = useAuth();
@@ -12,8 +13,14 @@ function Navbar({ setWorkspaceId, updateFormSequence }) {
     const {formId: id} = useParams();
     const [searchParams] = useSearchParams();
     const dashboardId = useSelector(state => state.dashboard.dashboardId);
+    
+    const dispatch = useDispatch()
+    const darkMode = useSelector((state) => state.darkMode.darkMode);
+    
 
-
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        return localStorage.getItem('darkMode') === 'true';
+    })
     const [folderId, setFolderId] = useState(searchParams.get('fid'));
     const [formId, setFormId] = useState(id);
     const [formName, setFormName] = useState('');
@@ -29,6 +36,10 @@ function Navbar({ setWorkspaceId, updateFormSequence }) {
             setFormId(formId); setWorkspaceId(formId);
             navigate(`/workspace?wid=${formId}`);
         }
+    };
+    const handleThemeToggle = () => {
+        dispatch(toggleDarkMode())
+        setIsDarkMode(!isDarkMode)  
     };
 
     const handleFetchFormById = async () => {
@@ -73,6 +84,11 @@ function Navbar({ setWorkspaceId, updateFormSequence }) {
             if (formId) handleFetchFormById();
         }
     }, [token]);
+    useEffect(() => {
+        // Apply the theme on mount
+        document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+        localStorage.setItem('darkMode', isDarkMode);
+    }, [isDarkMode]); 
 
     return (
         <div className={styles.navbar}>
@@ -84,6 +100,16 @@ function Navbar({ setWorkspaceId, updateFormSequence }) {
                 <NavLink to={formId ? `/submissions?fid=${formId}` : window.location} className={({ isActive }) => isActive && formId ? styles.active : ''}>Response</NavLink>
             </div>
             <div className={styles.formAction}>
+                <div className={styles.toggleSwitch}>
+                            <input 
+                                className={styles.toggleInput} 
+                                id="toggle" 
+                                type="checkbox"
+                                checked={isDarkMode}
+                                onChange={handleThemeToggle}
+                            />
+                            <label class={styles.toggleLabel} for="toggle"></label>
+                </div>
                 <button disabled={formSequence?.length == 0} onClick={copyFormLink}>Share</button>
                 <button onClick={handleFormSave}>Save</button>
                 <NavLink to={`/dashboard/${dashboardId}`}><img src="/icons/close.png" alt="close icon" /></NavLink>
