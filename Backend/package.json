@@ -4,7 +4,8 @@
   "description": "make, collaborate, share forms and check stats, forms made easy!",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon index.js ",
+    "start": "node index.js ",
+    "test": "npx nodemon index.js ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sidharth Bhasin",
