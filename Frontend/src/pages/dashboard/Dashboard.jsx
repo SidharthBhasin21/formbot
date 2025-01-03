@@ -8,7 +8,7 @@ import FormCard from "../../components/dashboard/FormCard";
 import CreateFolderModal from "../../components/dashboard/createFolder";
 import DeleteModal from "../../components/dashboard/DeleteModal";
 import {createFolder, deleteFolderApi, getAllfolders} from "../../apis/folders";
-import CreateFormModal from "../../components/createFormModal";
+import CreateFormModal from "../../components/CreateFormModal";
 import { toast } from "react-toastify";
 import { deleteForm } from "../../apis/form";
 import ShareModal from "../../components/shareModal/ShareModal";
