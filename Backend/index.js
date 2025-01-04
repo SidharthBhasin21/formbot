@@ -13,7 +13,6 @@ const dashboardRouter = require('./routes/dashboardRouter')
 
 db()
 app.use(cors({
-    origin: "https://formbot-zk2y.vercel.app/",
     credentials: true
 }));
 app.use(express.json());
