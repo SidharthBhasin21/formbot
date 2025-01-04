@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const dotenv = require('dotenv').config();
 const cors = require("cors");
-
+const PORT = process.env.PORT || 3000;
 
 const userRouter = require('./routes/userRouter')
 const formRouter = require('./routes/formRouter')
@@ -32,6 +32,6 @@ app.use('/folder', folderRouter)
 app.use('/dashboard', dashboardRouter)
 
 
-app.listen(3000, () => {
-    console.log('Server is running on port http://localhost:3000');
+app.listen(PORT, () => {
+    console.log('Server is running on port', PORT);
 })
